@@ -37,7 +37,7 @@ class Asset(models.Model):
     admin = models.ForeignKey(User, null=True, blank=True, verbose_name='资产管理员', related_name='admin',
                               on_delete=models.SET_NULL)
     idc = models.ForeignKey('IDC', null=True, blank=True, verbose_name='所在机房', on_delete=models.SET_NULL)
-    contract = models.ForeignKey('Contract', null=True, blank=True, verbose_name='合同', on_delete=models.SET_NULL)
+    # contract = models.ForeignKey('Contract', null=True, blank=True, verbose_name='合同', on_delete=models.SET_NULL)
 
     purchase_day = models.DateField(null=True, blank=True, verbose_name="购买日期")
     expire_day = models.DateField(null=True, blank=True, verbose_name="过保日期")
@@ -233,26 +233,26 @@ class BusinessUnit(models.Model):
         verbose_name_plural = "业务线"
 
 
-class Contract(models.Model):
-    """合同"""
-
-    sn = models.CharField('合同号', max_length=128, unique=True)
-    name = models.CharField('合同名称', max_length=64)
-    memo = models.TextField('备注', blank=True, null=True)
-    price = models.IntegerField('合同金额')
-    detail = models.TextField('合同详细', blank=True, null=True)
-    start_day = models.DateField('开始日期', blank=True, null=True)
-    end_day = models.DateField('失效日期', blank=True, null=True)
-    license_num = models.IntegerField('license数量', blank=True, null=True)
-    c_day = models.DateField('创建日期', auto_now_add=True)
-    m_day = models.DateField('修改日期', auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = '合同'
-        verbose_name_plural = "合同"
+# class Contract(models.Model):
+#     """合同"""
+#
+#     sn = models.CharField('合同号', max_length=128, unique=True)
+#     name = models.CharField('合同名称', max_length=64)
+#     memo = models.TextField('备注', blank=True, null=True)
+#     price = models.IntegerField('合同金额')
+#     detail = models.TextField('合同详细', blank=True, null=True)
+#     start_day = models.DateField('开始日期', blank=True, null=True)
+#     end_day = models.DateField('失效日期', blank=True, null=True)
+#     license_num = models.IntegerField('license数量', blank=True, null=True)
+#     c_day = models.DateField('创建日期', auto_now_add=True)
+#     m_day = models.DateField('修改日期', auto_now=True)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = '合同'
+#         verbose_name_plural = "合同"
 
 
 class Tag(models.Model):

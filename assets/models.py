@@ -79,7 +79,7 @@ class Server(models.Model):
     hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
                                   blank=True, null=True, verbose_name="宿主机", on_delete=models.CASCADE)  # 虚拟机专用字段
     model = models.CharField(max_length=128, null=True, blank=True, verbose_name='服务器型号')
-    raid_type = models.CharField(max_length=512, blank=True, null=True, verbose_name='Raid类型')
+    # raid_type = models.CharField(max_length=512, blank=True, null=True, verbose_name='Raid类型')
 
     os_type = models.CharField('操作系统类型', max_length=64, blank=True, null=True)
     os_distribution = models.CharField('发行商', max_length=64, blank=True, null=True)

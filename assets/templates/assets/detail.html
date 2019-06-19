@@ -110,7 +110,7 @@
                         <th>服务器类型</th>
                         <th>型号</th>
                         <th>宿主机</th>
-                        <th>Raid类型</th>
+{#                        <th>Raid类型</th>#}
                         <th>OS类型</th>
                         <th>OS发行版本</th>
                         <th>OS版本</th>
@@ -122,7 +122,7 @@
                     <td>{{ asset.server.get_sub_asset_type_display }}</td>
                     <td>{{ asset.server.model|default:'N/A' }}</td>
                     <td>{{ asset.server.hosted_on.id|default:'N/A' }}</td>
-                    <td>{{ asset.server.raid_type|default:'N/A' }}</td>
+{#                    <td>{{ asset.server.raid_type|default:'N/A' }}</td>#}
                     <td>{{ asset.server.os_type|default:'N/A' }}</td>
                     <td>{{ asset.server.os_distribution|default:'N/A' }}</td>
                     <td>{{ asset.server.os_release|default:'N/A' }}</td>

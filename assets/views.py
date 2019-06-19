@@ -34,7 +34,7 @@ def dashboard(request):
 
     server_number = models.Server.objects.count()
     networkdevice_number = models.NetworkDevice.objects.count()
-    storagedevice_number = models.StorageDevice.objects.count()
+    # storagedevice_number = models.StorageDevice.objects.count()
     securitydevice_number = models.SecurityDevice.objects.count()
     software_number = models.Software.objects.count()
 

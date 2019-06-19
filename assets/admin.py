@@ -31,7 +31,7 @@ class AssetAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Asset, AssetAdmin)
 admin.site.register(models.Server)
-admin.site.register(models.StorageDevice)
+# admin.site.register(models.StorageDevice)
 admin.site.register(models.SecurityDevice)
 admin.site.register(models.NetworkDevice)
 admin.site.register(models.Software)

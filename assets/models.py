@@ -9,7 +9,7 @@ class Asset(models.Model):
     asset_type_choice = (
         ('server', '服务器'),
         ('networkdevice', '网络设备'),
-        ('storagedevice', '存储设备'),
+        # ('storagedevice', '存储设备'),
         ('securitydevice', '安全设备'),
         ('software', '软件资产'),
     )
@@ -115,26 +115,26 @@ class SecurityDevice(models.Model):
         verbose_name_plural = "安全设备"
 
 
-class StorageDevice(models.Model):
-    """存储设备"""
-
-    sub_asset_type_choice = (
-        (0, '磁盘阵列'),
-        (1, '网络存储器'),
-        (2, '磁带库'),
-        (4, '磁带机'),
-    )
-
-    asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
-    sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="存储设备类型")
-    model = models.CharField(max_length=128, default='未知型号', verbose_name='存储设备型号')
-
-    def __str__(self):
-        return self.asset.name + "--" + self.get_sub_asset_type_display() + str(self.model) + " id:%s" % self.id
-
-    class Meta:
-        verbose_name = '存储设备'
-        verbose_name_plural = "存储设备"
+# class StorageDevice(models.Model):
+#     """存储设备"""
+#
+#     sub_asset_type_choice = (
+#         (0, '磁盘阵列'),
+#         (1, '网络存储器'),
+#         (2, '磁带库'),
+#         (4, '磁带机'),
+#     )
+#
+#     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
+#     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="存储设备类型")
+#     model = models.CharField(max_length=128, default='未知型号', verbose_name='存储设备型号')
+#
+#     def __str__(self):
+#         return self.asset.name + "--" + self.get_sub_asset_type_display() + str(self.model) + " id:%s" % self.id
+#
+#     class Meta:
+#         verbose_name = '存储设备'
+#         verbose_name_plural = "存储设备"
 
 
 class NetworkDevice(models.Model):
@@ -393,7 +393,7 @@ class NewAssetApprovalZone(models.Model):
     asset_type_choice = (
         ('server', '服务器'),
         ('networkdevice', '网络设备'),
-        ('storagedevice', '存储设备'),
+        # ('storagedevice', '存储设备'),
         ('securitydevice', '安全设备'),
         ('software', '软件资产'),
     )

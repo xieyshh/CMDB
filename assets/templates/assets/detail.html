@@ -109,7 +109,7 @@
                     <tr>
                         <th>服务器类型</th>
                         <th>型号</th>
-                        <th>宿主机</th>
+{#                        <th>宿主机</th>#}
 {#                        <th>Raid类型</th>#}
                         <th>OS类型</th>
                         <th>OS发行版本</th>
@@ -121,7 +121,7 @@
                 <tr>
                     <td>{{ asset.server.get_sub_asset_type_display }}</td>
                     <td>{{ asset.server.model|default:'N/A' }}</td>
-                    <td>{{ asset.server.hosted_on.id|default:'N/A' }}</td>
+{#                    <td>{{ asset.server.hosted_on.id|default:'N/A' }}</td>#}
 {#                    <td>{{ asset.server.raid_type|default:'N/A' }}</td>#}
                     <td>{{ asset.server.os_type|default:'N/A' }}</td>
                     <td>{{ asset.server.os_distribution|default:'N/A' }}</td>
@@ -135,15 +135,15 @@
             <table border="1" class="table  table-responsive" style="border-left:3px solid purple;border-bottom:1px solid purple">
                 <thead>
                     <tr>
-                        <th  style="width: 45%">CPU型号</th>
-                        <th  style="width: 15%">物理CPU个数</th>
+{#                        <th  style="width: 45%">CPU型号</th>#}
+{#                        <th  style="width: 15%">物理CPU个数</th>#}
                         <th>CPU核数</th>
                     </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ asset.cpu.cpu_model|default:'N/A' }}</td>
-                    <td>{{ asset.cpu.cpu_count|default:'1' }}</td>
+{#                    <td>{{ asset.cpu.cpu_model|default:'N/A' }}</td>#}
+{#                    <td>{{ asset.cpu.cpu_count|default:'1' }}</td>#}
                     <td>{{ asset.cpu.cpu_core_count|default:'1' }}</td>
                 </tr>
                 </tbody>

@@ -8,9 +8,9 @@ class Asset(models.Model):
 
     asset_type_choice = (
         ('server', '服务器'),
-        ('networkdevice', '网络设备'),
+        # ('networkdevice', '网络设备'),
         # ('storagedevice', '存储设备'),
-        ('securitydevice', '安全设备'),
+        # ('securitydevice', '安全设备'),
         ('software', '软件资产'),
     )
 
@@ -76,8 +76,8 @@ class Server(models.Model):
     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)  # 非常关键的一对一关联！asset被删除的时候一并删除server
     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="服务器类型")
     created_by = models.CharField(choices=created_by_choice, max_length=32, default='auto', verbose_name="添加方式")
-    hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
-                                  blank=True, null=True, verbose_name="宿主机", on_delete=models.CASCADE)  # 虚拟机专用字段
+    # hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
+    #                               blank=True, null=True, verbose_name="宿主机", on_delete=models.CASCADE)  # 虚拟机专用字段
     model = models.CharField(max_length=128, null=True, blank=True, verbose_name='服务器型号')
     # raid_type = models.CharField(max_length=512, blank=True, null=True, verbose_name='Raid类型')
 
@@ -93,26 +93,26 @@ class Server(models.Model):
         verbose_name_plural = "服务器"
 
 
-class SecurityDevice(models.Model):
-    """安全设备"""
-
-    sub_asset_type_choice = (
-        (0, '防火墙'),
-        (1, '入侵检测设备'),
-        (2, '互联网网关'),
-        (4, '运维审计系统'),
-    )
-
-    asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
-    sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="安全设备类型")
-    model = models.CharField(max_length=128, default='未知型号', verbose_name='安全设备型号')
-
-    def __str__(self):
-        return self.asset.name + "--" + self.get_sub_asset_type_display() + str(self.model) + " id:%s" % self.id
-
-    class Meta:
-        verbose_name = '安全设备'
-        verbose_name_plural = "安全设备"
+# class SecurityDevice(models.Model):
+#     """安全设备"""
+#
+#     sub_asset_type_choice = (
+#         (0, '防火墙'),
+#         (1, '入侵检测设备'),
+#         (2, '互联网网关'),
+#         (4, '运维审计系统'),
+#     )
+#
+#     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
+#     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="安全设备类型")
+#     model = models.CharField(max_length=128, default='未知型号', verbose_name='安全设备型号')
+#
+#     def __str__(self):
+#         return self.asset.name + "--" + self.get_sub_asset_type_display() + str(self.model) + " id:%s" % self.id
+#
+#     class Meta:
+#         verbose_name = '安全设备'
+#         verbose_name_plural = "安全设备"
 
 
 # class StorageDevice(models.Model):
@@ -137,33 +137,33 @@ class SecurityDevice(models.Model):
 #         verbose_name_plural = "存储设备"
 
 
-class NetworkDevice(models.Model):
-    """网络设备"""
-
-    sub_asset_type_choice = (
-        (0, '路由器'),
-        (1, '交换机'),
-        (2, '负载均衡'),
-        (4, 'VPN设备'),
-    )
-
-    asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
-    sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="网络设备类型")
-
-    vlan_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="VLanIP")
-    intranet_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="内网IP")
-
-    model = models.CharField(max_length=128, default='未知型号',  verbose_name="网络设备型号")
-    firmware = models.CharField(max_length=128, blank=True, null=True, verbose_name="设备固件版本")
-    port_num = models.SmallIntegerField(null=True, blank=True, verbose_name="端口个数")
-    device_detail = models.TextField(null=True, blank=True, verbose_name="详细配置")
-
-    def __str__(self):
-        return '%s--%s--%s <sn:%s>' % (self.asset.name, self.get_sub_asset_type_display(), self.model, self.asset.sn)
-
-    class Meta:
-        verbose_name = '网络设备'
-        verbose_name_plural = "网络设备"
+# class NetworkDevice(models.Model):
+#     """网络设备"""
+#
+#     sub_asset_type_choice = (
+#         (0, '路由器'),
+#         (1, '交换机'),
+#         (2, '负载均衡'),
+#         (4, 'VPN设备'),
+#     )
+#
+#     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
+#     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="网络设备类型")
+#
+#     vlan_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="VLanIP")
+#     intranet_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="内网IP")
+#
+#     model = models.CharField(max_length=128, default='未知型号',  verbose_name="网络设备型号")
+#     firmware = models.CharField(max_length=128, blank=True, null=True, verbose_name="设备固件版本")
+#     port_num = models.SmallIntegerField(null=True, blank=True, verbose_name="端口个数")
+#     device_detail = models.TextField(null=True, blank=True, verbose_name="详细配置")
+#
+#     def __str__(self):
+#         return '%s--%s--%s <sn:%s>' % (self.asset.name, self.get_sub_asset_type_display(), self.model, self.asset.sn)
+#
+#     class Meta:
+#         verbose_name = '网络设备'
+#         verbose_name_plural = "网络设备"
 
 
 class Software(models.Model):
@@ -392,9 +392,9 @@ class NewAssetApprovalZone(models.Model):
     sn = models.CharField('资产SN号', max_length=128, unique=True)  # 此字段必填
     asset_type_choice = (
         ('server', '服务器'),
-        ('networkdevice', '网络设备'),
+        # ('networkdevice', '网络设备'),
         # ('storagedevice', '存储设备'),
-        ('securitydevice', '安全设备'),
+        # ('securitydevice', '安全设备'),
         ('software', '软件资产'),
     )
     asset_type = models.CharField(choices=asset_type_choice, default='server', max_length=64, blank=True, null=True,

@@ -33,9 +33,9 @@ def dashboard(request):
     bu_rate = round(backup / total * 100)
 
     server_number = models.Server.objects.count()
-    networkdevice_number = models.NetworkDevice.objects.count()
+    # networkdevice_number = models.NetworkDevice.objects.count()
     # storagedevice_number = models.StorageDevice.objects.count()
-    securitydevice_number = models.SecurityDevice.objects.count()
+    # securitydevice_number = models.SecurityDevice.objects.count()
     software_number = models.Software.objects.count()
 
     return render(request, 'assets/dashboard.html', locals())

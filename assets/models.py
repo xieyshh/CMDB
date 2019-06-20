@@ -36,7 +36,7 @@ class Asset(models.Model):
     tags = models.ManyToManyField('Tag', blank=True, verbose_name='标签')
     admin = models.ForeignKey(User, null=True, blank=True, verbose_name='资产管理员', related_name='admin',
                               on_delete=models.SET_NULL)
-    idc = models.ForeignKey('IDC', null=True, blank=True, verbose_name='所在机房', on_delete=models.SET_NULL)
+    # idc = models.ForeignKey('IDC', null=True, blank=True, verbose_name='所在机房', on_delete=models.SET_NULL)
     # contract = models.ForeignKey('Contract', null=True, blank=True, verbose_name='合同', on_delete=models.SET_NULL)
 
     purchase_day = models.DateField(null=True, blank=True, verbose_name="购买日期")
@@ -189,17 +189,17 @@ class Software(models.Model):
         verbose_name_plural = "软件/系统"
 
 
-class IDC(models.Model):
-    """机房"""
-    name = models.CharField(max_length=64, unique=True, verbose_name="机房名称")
-    memo = models.CharField(max_length=128, blank=True, null=True, verbose_name='备注')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = '机房'
-        verbose_name_plural = "机房"
+# class IDC(models.Model):
+#     """机房"""
+#     name = models.CharField(max_length=64, unique=True, verbose_name="机房名称")
+#     memo = models.CharField(max_length=128, blank=True, null=True, verbose_name='备注')
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = '机房'
+#         verbose_name_plural = "机房"
 
 
 class Manufacturer(models.Model):

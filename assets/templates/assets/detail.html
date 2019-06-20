@@ -51,7 +51,7 @@
                         <th>业务线</th>
                         <th>制造商</th>
                         <th>管理IP</th>
-                        <th>机房</th>
+{#                        <th>机房</th>#}
                         <th>标签</th>
                         <th>更新日期</th>
                     </tr>
@@ -63,7 +63,7 @@
                     <td>{{ asset.business_unit|default:'N/A' }}</td>
                     <td>{{ asset.manufacturer|default:'N/A' }}</td>
                     <td>{{ asset.manage_ip|default:'N/A' }}</td>
-                    <td>{{ asset.idc|default:'N/A' }}</td>
+{#                    <td>{{ asset.idc|default:'N/A' }}</td>#}
                     <td>
                         {% for tag in asset.tags.all %}
                         <label class="label label-primary">{{ tag.name }}</label>

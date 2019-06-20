@@ -63,19 +63,18 @@ class Server(models.Model):
     """服务器设备"""
 
     sub_asset_type_choice = (
-        (0, 'PC服务器'),
-        (1, '刀片机'),
-        (2, '小型机'),
+        (0, '阿里云'),
+        (1, '用友云'),
     )
 
-    created_by_choice = (
-        ('auto', '自动添加'),
-        ('manual', '手工录入'),
-    )
+    # created_by_choice = (
+    #     ('auto', '自动添加'),
+    #     ('manual', '手工录入'),
+    # )
 
     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)  # 非常关键的一对一关联！asset被删除的时候一并删除server
     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="服务器类型")
-    created_by = models.CharField(choices=created_by_choice, max_length=32, default='auto', verbose_name="添加方式")
+    # created_by = models.CharField(choices=created_by_choice, max_length=32, default='auto', verbose_name="添加方式")
     # hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
     #                               blank=True, null=True, verbose_name="宿主机", on_delete=models.CASCADE)  # 虚拟机专用字段
     model = models.CharField(max_length=128, null=True, blank=True, verbose_name='服务器型号')
@@ -220,13 +219,22 @@ class Manufacturer(models.Model):
 class BusinessUnit(models.Model):
     """业务线"""
 
+    sub_name_choice = (
+        (0, '友报账'),
+        (1, '友帐表'),
+        (2, '友报表'),
+        (3, '电子档案'),
+    )
+
     parent_unit = models.ForeignKey('self', blank=True, null=True, related_name='parent_level',
                                     on_delete=models.SET_NULL)
-    name = models.CharField('业务线', max_length=64, unique=True)
+    # name = models.CharField('业务线', max_length=64, unique=True)
+    name = models.SmallIntegerField(choices=sub_name_choice, default=0, verbose_name="业务线")
     memo = models.CharField('备注', max_length=64, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+
+        return '%s' % (self.get_name_display())
 
     class Meta:
         verbose_name = '业务线'
@@ -268,67 +276,67 @@ class Tag(models.Model):
         verbose_name_plural = "标签"
 
 
-class CPU(models.Model):
-    """CPU组件"""
-
-    asset = models.OneToOneField('Asset', on_delete=models.CASCADE)  # 设备上的cpu肯定都是一样的，所以不需要建立多个cpu数据，一条就可以，因此使用一对一。
-    cpu_model = models.CharField('CPU型号', max_length=128, blank=True, null=True)
-    cpu_count = models.PositiveSmallIntegerField('物理CPU个数', default=1)
-    cpu_core_count = models.PositiveSmallIntegerField('CPU核数', default=1)
-
-    def __str__(self):
-        return self.asset.name + ":   " + self.cpu_model
-
-    class Meta:
-        verbose_name = 'CPU'
-        verbose_name_plural = "CPU"
-
-
-class RAM(models.Model):
-    """内存组件"""
-
-    asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
-    sn = models.CharField('SN号', max_length=128, blank=True, null=True)
-    model = models.CharField('内存型号', max_length=128, blank=True, null=True)
-    manufacturer = models.CharField('内存制造商', max_length=128, blank=True, null=True)
-    slot = models.CharField('插槽', max_length=64)
-    capacity = models.IntegerField('内存大小(GB)', blank=True, null=True)
-
-    def __str__(self):
-        return '%s: %s: %s: %s' % (self.asset.name, self.model, self.slot, self.capacity)
-
-    class Meta:
-        verbose_name = '内存'
-        verbose_name_plural = "内存"
-        unique_together = ('asset', 'slot')  # 同一资产下的内存，根据插槽的不同，必须唯一
+# class CPU(models.Model):
+#     """CPU组件"""
+#
+#     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)  # 设备上的cpu肯定都是一样的，所以不需要建立多个cpu数据，一条就可以，因此使用一对一。
+#     cpu_model = models.CharField('CPU型号', max_length=128, blank=True, null=True)
+#     cpu_count = models.PositiveSmallIntegerField('物理CPU个数', default=1)
+#     cpu_core_count = models.PositiveSmallIntegerField('CPU核数', default=1)
+#
+#     def __str__(self):
+#         return self.asset.name + ":   " + self.cpu_model
+#
+#     class Meta:
+#         verbose_name = 'CPU'
+#         verbose_name_plural = "CPU"
 
 
-class Disk(models.Model):
-    """硬盘设备"""
+# class RAM(models.Model):
+#     """内存组件"""
+#
+#     asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
+#     sn = models.CharField('SN号', max_length=128, blank=True, null=True)
+#     model = models.CharField('内存型号', max_length=128, blank=True, null=True)
+#     manufacturer = models.CharField('内存制造商', max_length=128, blank=True, null=True)
+#     slot = models.CharField('插槽', max_length=64)
+#     capacity = models.IntegerField('内存大小(GB)', blank=True, null=True)
+#
+#     def __str__(self):
+#         return '%s: %s: %s: %s' % (self.asset.name, self.model, self.slot, self.capacity)
+#
+#     class Meta:
+#         verbose_name = '内存'
+#         verbose_name_plural = "内存"
+#         unique_together = ('asset', 'slot')  # 同一资产下的内存，根据插槽的不同，必须唯一
 
-    disk_interface_type_choice = (
-        ('SATA', 'SATA'),
-        ('SAS', 'SAS'),
-        ('SCSI', 'SCSI'),
-        ('SSD', 'SSD'),
-        ('unknown', 'unknown'),
-    )
 
-    asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
-    sn = models.CharField('硬盘SN号', max_length=128)
-    slot = models.CharField('所在插槽位', max_length=64, blank=True, null=True)
-    model = models.CharField('磁盘型号', max_length=128, blank=True, null=True)
-    manufacturer = models.CharField('磁盘制造商', max_length=128, blank=True, null=True)
-    capacity = models.FloatField('磁盘容量(GB)', blank=True, null=True)
-    interface_type = models.CharField('接口类型', max_length=16, choices=disk_interface_type_choice, default='unknown')
-
-    def __str__(self):
-        return '%s:  %s:  %s:  %sGB' % (self.asset.name, self.model, self.slot, self.capacity)
-
-    class Meta:
-        verbose_name = '硬盘'
-        verbose_name_plural = "硬盘"
-        unique_together = ('asset', 'sn')
+# class Disk(models.Model):
+#     """硬盘设备"""
+#
+#     disk_interface_type_choice = (
+#         ('SATA', 'SATA'),
+#         ('SAS', 'SAS'),
+#         ('SCSI', 'SCSI'),
+#         ('SSD', 'SSD'),
+#         ('unknown', 'unknown'),
+#     )
+#
+#     asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
+#     sn = models.CharField('硬盘SN号', max_length=128)
+#     slot = models.CharField('所在插槽位', max_length=64, blank=True, null=True)
+#     model = models.CharField('磁盘型号', max_length=128, blank=True, null=True)
+#     manufacturer = models.CharField('磁盘制造商', max_length=128, blank=True, null=True)
+#     capacity = models.FloatField('磁盘容量(GB)', blank=True, null=True)
+#     interface_type = models.CharField('接口类型', max_length=16, choices=disk_interface_type_choice, default='unknown')
+#
+#     def __str__(self):
+#         return '%s:  %s:  %s:  %sGB' % (self.asset.name, self.model, self.slot, self.capacity)
+#
+#     class Meta:
+#         verbose_name = '硬盘'
+#         verbose_name_plural = "硬盘"
+#         unique_together = ('asset', 'sn')
 
 
 # class NIC(models.Model):

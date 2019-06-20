@@ -114,7 +114,7 @@
                         <th>OS类型</th>
                         <th>OS发行版本</th>
                         <th>OS版本</th>
-                        <th>添加方式</th>
+{#                        <th>添加方式</th>#}
                     </tr>
                 </thead>
                 <tbody>
@@ -126,90 +126,90 @@
                     <td>{{ asset.server.os_type|default:'N/A' }}</td>
                     <td>{{ asset.server.os_distribution|default:'N/A' }}</td>
                     <td>{{ asset.server.os_release|default:'N/A' }}</td>
-                    <td>{{ asset.server.get_created_by_display }}</td>
+{#                    <td>{{ asset.server.get_created_by_display }}</td>#}
                 </tr>
                 </tbody>
             </table>
 
-            <h4><b>CPU:</b></h4>
-            <table border="1" class="table  table-responsive" style="border-left:3px solid purple;border-bottom:1px solid purple">
-                <thead>
-                    <tr>
+{#            <h4><b>CPU:</b></h4>#}
+{#            <table border="1" class="table  table-responsive" style="border-left:3px solid purple;border-bottom:1px solid purple">#}
+{#                <thead>#}
+{#                    <tr>#}
 {#                        <th  style="width: 45%">CPU型号</th>#}
 {#                        <th  style="width: 15%">物理CPU个数</th>#}
-                        <th>CPU核数</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
+{#                        <th>CPU核数</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                <tr>#}
 {#                    <td>{{ asset.cpu.cpu_model|default:'N/A' }}</td>#}
 {#                    <td>{{ asset.cpu.cpu_count|default:'1' }}</td>#}
-                    <td>{{ asset.cpu.cpu_core_count|default:'1' }}</td>
-                </tr>
-                </tbody>
-            </table>
+{#                    <td>{{ asset.cpu.cpu_core_count|default:'1' }}</td>#}
+{#                </tr>#}
+{#                </tbody>#}
+{#            </table>#}
 
-            <h4><b>内存:</b></h4>
-            <table border="1" class="table  table-responsive" style="border-left:3px solid orangered;border-bottom:1px solid orangered">
-                <thead>
-                    <tr>
-                        <th style="width:5%;">序号</th>
-                        <th>型号</th>
-                        <th>容量</th>
-                        <th>插槽</th>
-                        <th>制造商</th>
-                        <th>SN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for ram in asset.ram_set.all %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ ram.model|default:'N/A' }}</td>
-                        <td>{{ ram.capacity|default:'N/A' }}</td>
-                        <td>{{ ram.slot }}</td>
-                        <td>{{ ram.manufacturer|default:'N/A' }}</td>
-                        <td>{{ ram.sn|default:'N/A' }}</td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td></td><td></td><td></td><td></td><td></td><td></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+{#            <h4><b>内存:</b></h4>#}
+{#            <table border="1" class="table  table-responsive" style="border-left:3px solid orangered;border-bottom:1px solid orangered">#}
+{#                <thead>#}
+{#                    <tr>#}
+{#                        <th style="width:5%;">序号</th>#}
+{#                        <th>型号</th>#}
+{#                        <th>容量</th>#}
+{#                        <th>插槽</th>#}
+{#                        <th>制造商</th>#}
+{#                        <th>SN</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {% for ram in asset.ram_set.all %}#}
+{#                    <tr>#}
+{#                        <td>{{ forloop.counter }}</td>#}
+{#                        <td>{{ ram.model|default:'N/A' }}</td>#}
+{#                        <td>{{ ram.capacity|default:'N/A' }}</td>#}
+{#                        <td>{{ ram.slot }}</td>#}
+{#                        <td>{{ ram.manufacturer|default:'N/A' }}</td>#}
+{#                        <td>{{ ram.sn|default:'N/A' }}</td>#}
+{#                    </tr>#}
+{#                {% empty %}#}
+{#                    <tr>#}
+{#                        <td></td><td></td><td></td><td></td><td></td><td></td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
 
-            <h4><b>硬盘:</b></h4>
-            <table border="1" class="table  table-responsive" style="border-left:3px solid brown;border-bottom:1px solid brown">
-                <thead>
-                    <tr>
-                        <th style="width:5%;">序号</th>
-                        <th>型号</th>
-                        <th>容量</th>
-                        <th>插槽</th>
-                        <th>接口类型</th>
-                        <th>制造商</th>
-                        <th>SN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for disk in asset.disk_set.all %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ disk.model|default:'N/A' }}</td>
-                        <td>{{ disk.capacity|default:'N/A' }}</td>
-                        <td>{{ disk.slot|default:'N/A'  }}</td>
-                        <td>{{ disk.get_interface_type_display }}</td>
-                        <td>{{ disk.manufacturer|default:'N/A' }}</td>
-                        <td>{{ disk.sn}}</td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+{#            <h4><b>硬盘:</b></h4>#}
+{#            <table border="1" class="table  table-responsive" style="border-left:3px solid brown;border-bottom:1px solid brown">#}
+{#                <thead>#}
+{#                    <tr>#}
+{#                        <th style="width:5%;">序号</th>#}
+{#                        <th>型号</th>#}
+{#                        <th>容量</th>#}
+{#                        <th>插槽</th>#}
+{#                        <th>接口类型</th>#}
+{#                        <th>制造商</th>#}
+{#                        <th>SN</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {% for disk in asset.disk_set.all %}#}
+{#                    <tr>#}
+{#                        <td>{{ forloop.counter }}</td>#}
+{#                        <td>{{ disk.model|default:'N/A' }}</td>#}
+{#                        <td>{{ disk.capacity|default:'N/A' }}</td>#}
+{#                        <td>{{ disk.slot|default:'N/A'  }}</td>#}
+{#                        <td>{{ disk.get_interface_type_display }}</td>#}
+{#                        <td>{{ disk.manufacturer|default:'N/A' }}</td>#}
+{#                        <td>{{ disk.sn}}</td>#}
+{#                    </tr>#}
+{#                {% empty %}#}
+{#                    <tr>#}
+{#                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
 
 {#            <h4><b>网卡:</b></h4>#}
 {#            <table border="1" class="table  table-responsive" style="border-left:3px solid #a59b1a;border-bottom:1px solid #a59b1a">#}

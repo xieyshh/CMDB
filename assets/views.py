@@ -53,9 +53,6 @@ def detail(request, asset_id):
     return render(request, 'assets/detail.html', locals())
 
 
-
-
-
 @csrf_exempt
 def report(request):
     if request.method == 'POST':
@@ -82,3 +79,7 @@ def report(request):
             return HttpResponse('没有资产sn，请检查数据内容！')
 
     return HttpResponse('200 ok')
+
+def server(request):
+
+    return HttpResponse('400 ok')

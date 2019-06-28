@@ -77,15 +77,18 @@ class Server(models.Model):
     # created_by = models.CharField(choices=created_by_choice, max_length=32, default='auto', verbose_name="添加方式")
     # hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
     #                               blank=True, null=True, verbose_name="宿主机", on_delete=models.CASCADE)  # 虚拟机专用字段
-    model = models.CharField(max_length=128, null=True, blank=True, verbose_name='服务器型号')
+    model = models.CharField(max_length=128, null=True, blank=True, verbose_name='服务器配置')
     # raid_type = models.CharField(max_length=512, blank=True, null=True, verbose_name='Raid类型')
-
-    os_type = models.CharField('操作系统类型', max_length=64, blank=True, null=True)
-    os_distribution = models.CharField('发行商', max_length=64, blank=True, null=True)
-    os_release = models.CharField('操作系统版本', max_length=64, blank=True, null=True)
+    os_info = models.CharField('操作系统', max_length=64, blank=True, null=True)
+    ip_addr = models.GenericIPAddressField('IP_addr', blank=True, null=True)
+    # os_type = models.CharField('操作系统类型', max_length=64, blank=True, null=True)
+    # os_distribution = models.CharField('发行商', max_length=64, blank=True, null=True)
+    # os_release = models.CharField('操作系统版本', max_length=64, blank=True, null=True)
 
     def __str__(self):
-        return '%s--%s--%s <sn:%s>' % (self.asset.name, self.get_sub_asset_type_display(), self.model, self.asset.sn)
+        # return '%s--%s--%s <sn:%s>' % (self.asset.name, self.get_sub_asset_type_display(), self.model, self.asset.sn)
+        return '%s--%s' % (self.get_sub_asset_type_display(), self.ip_addr)
+
 
     class Meta:
         verbose_name = '服务器'
@@ -199,6 +202,37 @@ class Software(models.Model):
 #     class Meta:
 #         verbose_name = '机房'
 #         verbose_name_plural = "机房"
+
+class Project(models.Model):
+    """机房"""
+    name = models.CharField(max_length=64, unique=True, verbose_name="项目名称")
+    leader = models.CharField(max_length=64, null=True, blank=True, verbose_name="项目负责人")
+    giturl = models.CharField(max_length=64, null=True, blank=True, verbose_name="git地址")
+    memo = models.CharField(max_length=128, blank=True, null=True, verbose_name='备注')
+
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '项目名称'
+        verbose_name_plural = "项目名称"
+
+class Environment(models.Model):
+    """机房"""
+    name = models.CharField(max_length=64, unique=True, verbose_name="环境名称")
+    pattern = models.CharField(max_length=64, null=True, blank=True, verbose_name="部署方式")
+    accessurl = models.CharField(max_length=128, blank=True, null=True, verbose_name='访问地址')
+    businessunit = models.ForeignKey('BusinessUnit', blank=True, null=True, related_name='BusinessUnit',
+                                    on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return '%s--%s--%s' % (self.businessunit, self.name, self.accessurl)
+
+    class Meta:
+        verbose_name = '环境名称'
+        verbose_name_plural = "环境名称"
+
 
 
 class Manufacturer(models.Model):

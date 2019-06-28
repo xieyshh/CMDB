@@ -6,6 +6,8 @@ import json
 from assets import models
 from assets import asset_handler
 from django.shortcuts import get_object_or_404
+import sqlite3
+
 
 
 def index(request):
@@ -80,6 +82,18 @@ def report(request):
 
     return HttpResponse('200 ok')
 
+
+def get_data(sql):#获取数据库的数据
+    conn = sqlite3.connect("db.sqlite3")
+    cur = conn.cursor()
+    cur.execute(sql)
+    results = cur.fetchall() # 搜取所有结果
+    cur.close()
+    conn.close()
+    return results
+
 def server(request):
 
-    return HttpResponse('400 ok')
+    sql = "select model,ip_addr,os_info from assets_server"  # t为表名
+    m_data = get_data(sql)
+    return render(request, 'assets/server.html', {'server':m_data})
